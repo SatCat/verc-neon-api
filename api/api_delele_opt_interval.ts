@@ -8,7 +8,7 @@ type Sql = ReturnType<typeof postgres>;
 const VERC_NEON_DB_URL = Deno.env.get("VERC_NEON_DB_URL");
 
 export default async (req: Request) => {
-    return new Response(JSON.stringify(req));
+    return new Response(JSON.stringify(req.method));
     /*
     if (req.method === "POST") {
 
