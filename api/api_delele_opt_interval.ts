@@ -11,7 +11,7 @@ const VERC_API_KEY = Deno.env.get("VERC_API_KEY");
 export default async (req: Request) => {
     if (req.method === "POST" && req.headers.get('apikey') === VERC_API_KEY) {
         const body = await req.json();
-        return new Response(JSON.stringify(body);
+        return new Response(JSON.stringify(body));
 
     }
     /*
