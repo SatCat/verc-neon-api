@@ -7,19 +7,20 @@ type Sql = ReturnType<typeof postgres>;
 
 const VERC_NEON_DB_URL = Deno.env.get("VERC_NEON_DB_URL")
 
-function simplifyDateFormat(items: { batch_ts: Date; count: string }[]): { batch_ts: string; count: string }[] {
+function simplifyDateFormat(items) {
     return items.map(item => {
       const dateStr = new Date(item.batch_ts).toISOString();
       const formatted = dateStr
-        .replace(/\.\d{3}Z$/, 'Z')   // убираем .000 перед Z
+        //.replace(/\.\d{3}Z$/, 'Z')
         .replace('T', ' ')
         .replace('Z', '+00:00');
+  
       return {
-        ...item,
-        batch_ts: formatted
+        batch: formatted,
+        count: item.count
       };
     });
-}
+  }
 
 export default async (req: Request) => {
     if (req.method === "POST") {
