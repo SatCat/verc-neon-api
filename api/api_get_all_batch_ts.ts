@@ -7,7 +7,7 @@ export default async (req: Request) => {
     if (req.method === "POST") {
         // нужно запросить из базы все batch_ts
         const sql: Sql = postgres(VERC_NEON_DB_URL);
-        const get_time = await sql`select now();`;
+        const get_time = JSON.stringify(await sql`select now();`);
         await sql.close();
 
         return new Response(`SQL result: ${get_time}`);
