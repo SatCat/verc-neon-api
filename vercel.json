@@ -10,6 +10,11 @@
 	  {
 		"source": "/api_batch_report",
 		"destination": "/api/api_batch_report"
+	  },
+	  {
+		"source": "/api_get_all_batch_ts",
+		"destination": "/api/api_get_all_batch_ts"
 	  }
+
 	]
 }
