@@ -11,7 +11,7 @@ function simplifyDateFormat(items) {
     return items.map(item => {
       const dateStr = new Date(item.batch_ts).toISOString();
       const formatted = dateStr
-        //.replace(/\.\d{3}Z$/, 'Z')
+        .replace(/\.\d{3}Z$/, 'Z')
         .replace('T', ' ')
         .replace('Z', '+00:00');
   
