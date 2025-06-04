@@ -10,12 +10,10 @@ const VERC_NEON_DB_URL = Deno.env.get("VERC_NEON_DB_URL")
 function simplifyDateFormat(items: { batch_ts: Date; count: string }[]): { batch_ts: string; count: string }[] {
     return items.map(item => {
       const dateStr = new Date(item.batch_ts).toISOString();
-  
-      // Меняем 'T' на пробел и 'Z' на '+00:00'
       const formatted = dateStr
+        .replace(/\.\d{3}Z$/, 'Z')   // убираем .000 перед Z
         .replace('T', ' ')
         .replace('Z', '+00:00');
-  
       return {
         ...item,
         batch_ts: formatted
