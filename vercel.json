@@ -5,7 +5,11 @@
 	"rewrites": [
 	  {
 		"source": "/ping",
-		"destination": "/api/api"
+		"destination": "/api/ping"
+	  },
+	  {
+		"source": "/api_batch_report",
+		"destination": "/api/api_batch_report"
 	  }
 	]
 }
