@@ -5,12 +5,12 @@
 import postgres from "https://deno.land/x/postgresjs@v3.4.3/mod.js"; 
 type Sql = ReturnType<typeof postgres>;
 
-const VERC_NEON_DB_URL = Deno.env.get("VERC_NEON_DB_URL")
+const VERC_NEON_DB_URL = Deno.env.get("VERC_NEON_DB_URL");
 
 export default async (req: Request) => {
     if (req.method === "POST") {
 
-        return new Response(JSON.stringify(req.url))
+        return new Response(JSON.stringify( {body:req.body, headers: req.headers} ));
 
 
         /*
