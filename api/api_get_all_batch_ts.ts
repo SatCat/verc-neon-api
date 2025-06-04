@@ -24,8 +24,8 @@ function simplifyDateFormat(items) {
 export default async (req: Request) => {
     if (req.method === "POST") {
         const sql: Sql = postgres(VERC_NEON_DB_URL);
-        const get_all_batch_ts = await sql`SELECT batch_ts, count(*) FROM public.all_options GROUP BY batch_ts ORDER BY batch_ts ASC;`;
-        const retval = JSON.stringify(simplifyDateFormat(get_all_batch_ts))
+        const get_all_batch_ts = await sql`SELECT batch_ts::TEXT, count(*)::INTEGER FROM public.all_options GROUP BY batch_ts ORDER BY batch_ts ASC;`;
+        const retval = JSON.stringify(get_all_batch_ts)
         await sql.close();
         return new Response(retval);
     }
