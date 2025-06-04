@@ -10,7 +10,7 @@ const VERC_NEON_DB_URL = Deno.env.get("VERC_NEON_DB_URL")
 export default async (req: Request) => {
     if (req.method === "POST") {
 
-        return new Response(JSON.stringify(req.headers))
+        return new Response(JSON.stringify(req.url))
 
 
         /*
