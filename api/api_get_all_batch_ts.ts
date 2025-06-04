@@ -12,9 +12,8 @@ export default async (req: Request) => {
         const sql: Sql = postgres(VERC_NEON_DB_URL);
         const get_all_batch_ts = JSON.stringify(await sql`SELECT batch_ts, count(*) FROM public.all_options GROUP BY batch_ts ORDER BY batch_ts ASC;`);
 
-
         await sql.close();
-        return new Response(`SQL result: ${get_all_batch_ts}`);
+        return new Response(get_all_batch_ts);
     }
 	return new Response("API Error");
 };
