@@ -4,14 +4,18 @@
 
 import postgres from "https://deno.land/x/postgresjs@v3.4.3/mod.js"; 
 type Sql = ReturnType<typeof postgres>;
+interface Datas_from_to {
+    batch_from: string;
+    batch_to: string;
+  }
 
 const VERC_NEON_DB_URL = Deno.env.get("VERC_NEON_DB_URL");
 const VERC_API_KEY = Deno.env.get("VERC_API_KEY");
 
 export default async (req: Request) => {
     if (req.method === "POST" && req.headers.get('apikey') === VERC_API_KEY) {
-        const body = await req.json();
-        return new Response(JSON.stringify(body));
+        const {batch_from, batch_to} = await req.json() as Datas_from_to;
+        return new Response(JSON.stringify({one:batch_from, two:batch_to}));
 
     }
     /*
