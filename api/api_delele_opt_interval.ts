@@ -17,9 +17,7 @@ export default async (req: Request) => {
         const {batch_from, batch_to} = await req.json() as Datas_from_to;
 
         //return new Response(JSON.stringify({batch_from:batch_from+'+00:00', batch_to:batch_to+'+00:00'}));
-        return new Response(JSON.stringify(  {batch_from:batch_from+'+00:00'} ), {
-            status: 204, headers: { "Content-Type": "application/json" },
-            });
+        return new Response("req_del "+batch_from+" "+batch_to, { status: 204, });
         /*
         const sql: Sql = postgres(VERC_NEON_DB_URL);
         const retval = await sql`DELETE FROM public.all_options WHERE batch_ts>=${batch_from+'+00:00'}::timestamptz AND batch_ts<=${batch_to+'+00:00'}::timestamptz;`;
