@@ -15,18 +15,13 @@ const VERC_API_KEY = Deno.env.get("VERC_API_KEY");
 export default async (req: Request) => {
     if (req.method === "POST" && req.headers.get('apikey') === VERC_API_KEY) {
         const {batch_from, batch_to} = await req.json() as Datas_from_to;
-        return new Response(JSON.stringify({one:batch_from, two:batch_to}));
 
-    }
-    /*
-        
         const sql: Sql = postgres(VERC_NEON_DB_URL);
-        const retval = await sql`SELECT CONCAT(TO_CHAR(batch_ts, 'YYYY-MM-DD'), 'T', TO_CHAR(batch_ts, 'HH24:MI:SS+00:00')) as batch, count(*)::INTEGER FROM public.all_options GROUP BY batch_ts ORDER BY batch_ts ASC;`;
+        const retval = await sql`DELETE FROM public.all_options WHERE batch_ts>=${batch_from}+00:00::timestamptz AND batch_ts<=${batch_to}+00:00::timestamptz;`;
         await sql.close();
-        return new Response(  JSON.stringify(retval)  );
+        return new Response(JSON.stringify(retval), { status: 204 });
         
     }
-    */
 
-    return new Response("API Error");
+    return new Response("API Error", { status: 400 });
 };
