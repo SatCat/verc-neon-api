@@ -16,7 +16,9 @@ export default async (req: Request) => {
         const {batch_from, batch_to} = await req.json() as Datas_from_to;
 
         const sql: Sql = postgres(VERC_NEON_DB_URL);
-        const retval = await sql`SELECT * FROM public.all_options
+        const retval = await sql`SELECT instrument_name, option_type, strike, public.TPZZ(expiration_timestamp) expiration_timestamp, public.TPZZ(creation_timestamp) creation_timestamp,
+            public.TPZZ_ms(timestamp) timestamp, index_price, underlying_index, underlying_price, underlying_price, open_interest, mark_price, best_ask_price, best_bid_price, mark_iv, delta, 
+            vega, gamma, theta, rho, public.TPZZ(batch_ts) batch_ts FROM public.all_options
             WHERE batch_ts>=${batch_from+'+00:00'}::timestamptz AND batch_ts<=${batch_to+'+00:00'}::timestamptz
             ORDER BY batch_ts;`;
         await sql.close();
