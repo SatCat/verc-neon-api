@@ -16,6 +16,10 @@
 		"destination": "/api/api_delele_opt_interval"
 	  },
 	  {
+		"source": "/api_get_opt_interval",
+		"destination": "/api/api_get_opt_interval"
+	  },
+	  {
 		"source": "/api_get_all_batch_ts",
 		"destination": "/api/api_get_all_batch_ts"
 	  }
