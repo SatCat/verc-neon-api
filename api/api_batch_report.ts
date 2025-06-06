@@ -11,8 +11,8 @@ export default async (req: Request) => {
     if (req.method === "POST" && req.headers.get('apikey') === VERC_API_KEY) {
         const sql: Sql = postgres(VERC_NEON_DB_URL);
         const retval = await sql`WITH fst AS (SELECT date(batch_ts) date, min(batch_ts) as start, max(batch_ts) as stop, count(1) as size_opt FROM public.all_options GROUP BY batch_ts)
-            SELECT fst.date as date_tot, count(1) as batches, min(fst.start) as start, max(fst.stop) as stop, sum(size_opt)::bigint as opt_total
-            FROM fst GROUP BY date_tot;`;
+            SELECT fst.date as date, count(1) as batches, min(fst.start) as start, max(fst.stop) as stop, sum(size_opt)::bigint as opt_total
+            FROM fst GROUP BY date;`;
         await sql.close();
         return new Response(  JSON.stringify(retval)  );
     }
