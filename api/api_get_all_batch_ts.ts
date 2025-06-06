@@ -11,7 +11,6 @@ const VERC_API_KEY = Deno.env.get("VERC_API_KEY");
 export default async (req: Request) => {
     if (req.method === "POST" && req.headers.get('apikey') === VERC_API_KEY) {
         const sql: Sql = postgres(VERC_NEON_DB_URL);
-        //const retval = await sql`SELECT CONCAT(TO_CHAR(batch_ts, 'YYYY-MM-DD'), 'T', TO_CHAR(batch_ts, 'HH24:MI:SS+00:00')) as batch, count(*)::INTEGER FROM public.all_options GROUP BY batch_ts ORDER BY batch_ts ASC;`;
         const retval = await sql`SELECT public.TPZZ(batch_ts) as batch, count(*)::INTEGER FROM public.all_options GROUP BY batch_ts ORDER BY batch_ts ASC;`;
         await sql.close();
         return new Response(  JSON.stringify(retval)  );
