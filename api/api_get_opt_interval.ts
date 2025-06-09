@@ -13,13 +13,14 @@ const VERC_API_KEY = Deno.env.get("VERC_API_KEY");
 
 export default async (req: Request) => {
     if (req.method === "POST" && req.headers.get('apikey') === VERC_API_KEY) {
+        //  input format!!:  { "batch_from": "2025-06-08 00:00:00+00:00",  "batch_to": "2025-06-08 00:55:00+00:00"}
         const {batch_from, batch_to} = await req.json() as Datas_from_to;
 
         const sql: Sql = postgres(VERC_NEON_DB_URL);
         const retval = await sql`SELECT instrument_name, option_type, strike, public.TPZZ(expiration_timestamp) expiration_timestamp, public.TPZZ(creation_timestamp) creation_timestamp,
             public.TPZZ_ms(timestamp) timestamp, index_price, underlying_index, underlying_price, underlying_price, open_interest, mark_price, best_ask_price, best_bid_price, mark_iv, delta, 
             vega, gamma, theta, rho, public.TPZZ(batch_ts) batch_ts FROM public.all_options
-            WHERE batch_ts>=${batch_from+'+00:00'}::timestamptz AND batch_ts<=${batch_to+'+00:00'}::timestamptz
+            WHERE batch_ts>=${batch_from}::timestamptz AND batch_ts<=${batch_to}::timestamptz
             ORDER BY batch_ts;`;
         await sql.close();
 
